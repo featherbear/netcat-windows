@@ -1,3 +1,5 @@
+Update 2011-09-17 - added -c option to send CRLF
+
 
 UPDATE 12/27/04 security fix in -e option for Windows
 

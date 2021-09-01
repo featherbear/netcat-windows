@@ -1,21 +1,14 @@
 
-cc=cl
-link=link
+CC=i686-pc-mingw32-gcc
+#CC=x86_64-pc-mingw32-gcc
 
-cflags=/nologo /ML /W3 /GX /O2 /D "NDEBUG" /D "WIN32" /D "_CONSOLE" /D "TELNET" /D "GAPING_SECURITY_HOLE" /YX /FD /c 
-lflags=kernel32.lib user32.lib wsock32.lib winmm.lib /nologo /subsystem:console /incremental:yes /machine:I386 /out:nc.exe
+CFLAGS=-DNDEBUG -DWIN32 -D_CONSOLE -DTELNET -DGAPING_SECURITY_HOLE
+LDFLAGS=-s -lkernel32 -luser32 -lwsock32 -lwinmm
 
 all: nc.exe
 
-getopt.obj: getopt.c
-    $(cc) $(cflags) getopt.c
+nc.exe: getopt.c doexec.c netcat.c
+	$(CC) $(CFLAGS) getopt.c doexec.c netcat.c $(LDFLAGS) -o nc.exe
 
-doexec.obj: doexec.c
-    $(cc) $(cflags) doexec.c
-
-netcat.obj: netcat.c
-    $(cc) $(cflags) netcat.c
-
-
-nc.exe: getopt.obj doexec.obj netcat.obj
-    $(link) getopt.obj doexec.obj netcat.obj $(lflags)
+clean:
+	rm nc.exe
